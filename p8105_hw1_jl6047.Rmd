@@ -1,0 +1,54 @@
+---
+title: "p8105_hw1_jl6047"
+author: "Eric Luo"
+date: "2022-09-25"
+output: html_document
+---
+
+---
+title: "p8105_hw_jl6047"
+author: "Eric Luo"
+date: "2022-09-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#problem1
+library(skimr)
+library(tidyverse)
+#load data package
+data("penguins", package = "palmerpenguins")
+#short description of data "penguins"
+skim(penguins)
+#make scatterplot
+scatterplot = ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) + geom_point()
+#exoport scatter plot to project directory
+ggsave("scatterplot.pdf", plot=scatterplot)
+
+
+#problem2
+#generate 10 random sample of size 10 standard Normal distribution
+p2 = tibble(
+  vec_numeric = rnorm(10),
+  vec_logical = vec_numeric > 0,
+  vec_char = rep(c("a", "b", "c", "d", "e"), length.out = 10),
+  vec_factor = factor(rep(c("high","middle","low"), length.out = 10))
+)
+p2
+
+#mean of the variable
+mean(pull(p2,vec_numeric))
+mean(pull(p2,vec_logical))
+mean(pull(p2,vec_char))
+mean(pull(p2,vec_factor))
+
+#vec_char and vec_factor is not able to be calculated
+mean(as.numeric((pull(p2,vec_logical))))
+mean(as.numeric(pull(p2,vec_char)))
+mean(as.numeric(pull(p2,vec_factor)))
+#logical and factor can be converted but not character 
+#It happens because logical is just 0 and 1 in default, character cannot be measured in magnitude while factor is like a rank so it can somehow be numeric
